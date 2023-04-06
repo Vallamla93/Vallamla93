@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { FormGroup, NgForm } from '@angular/forms';
+import { Observable, tap } from 'rxjs';
 
 export interface IListing {
   _id: string;
@@ -59,5 +60,42 @@ export class ListingService {
   constructor(private http: HttpClient) {}
   getListings(): Observable<IListing[]> {
     return this.http.get<IListing[]>('http://localhost:5500/api/properties');
+  }
+
+  addListing(form: FormGroup): Observable<IListing> {
+    const token = localStorage.getItem('token') || '';
+    const data = {
+      name: form.value.name,
+      propertyType: form.value.propertyType,
+      cancellationPolicy: form.value.cancellationPolicy,
+      description: form.value.description,
+      accomodates: form.value.accomodates,
+      bedrooms: form.value.bedrooms,
+      beds: form.value.beds,
+      bathrooms: form.value.bathrooms,
+      price: form.value.price,
+      rules: form.value.rules,
+      images: {
+        pictureUrl: form.value.imageUrl,
+      },
+      address: {
+        building: form.value.building,
+        street: form.value.street,
+        city: form.value.city,
+        state: form.value.state,
+        country: form.value.country,
+      },
+    };
+    return this.http
+      .post<IListing>('http://localhost:5500/api/properties', data, {
+        headers: new HttpHeaders({
+          token: token,
+        }),
+      })
+      .pipe(
+        tap((response: any) => {
+          console.log(response);
+        })
+      );
   }
 }

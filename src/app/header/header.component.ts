@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,20 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   searchText = '';
+  showDropdown = false;
+  isLoggedIn = false;
+  loggedUsername = '';
 
-  constructor(private router: Router) {}
+  constructor(protected router: Router, private auth: AuthService) {}
+
+  ngOnInit() {
+    this.auth.isLoggedIn$.subscribe((res) => {
+      this.isLoggedIn = res;
+    });
+    this.auth.username$.subscribe((res) => {
+      this.loggedUsername = res;
+    });
+  }
 
   navigateToHome() {
     this.router.navigate(['/']);
@@ -17,6 +30,23 @@ export class HeaderComponent {
 
   navigateToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  navigateToRegister() {
+    this.router.navigate(['/signup']);
+  }
+
+  navigateToAddListing() {
+    this.router.navigate(['/add-listing']);
+  }
+
+  handleLogout() {
+    this.showDropdown = false;
+    this.auth.logout();
+  }
+
+  setShowDropdown(value: boolean) {
+    this.showDropdown = value;
   }
 
   searchHome(event: Event) {

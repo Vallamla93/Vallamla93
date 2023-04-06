@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { CardComponent } from './card/card.component';
 import { ListingComponent } from './listing/listing.component';
+import { AddlistingComponent } from './addlisting/addlisting.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ListingComponent } from './listing/listing.component';
     HeaderComponent,
     CardComponent,
     ListingComponent,
+    AddlistingComponent,
   ],
   imports: [
     BrowserModule,
