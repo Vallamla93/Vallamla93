@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { HelperService } from '../services/helper.service';
 import { IListing, ListingService } from '../services/listing.service';
 
 @Component({
@@ -8,12 +10,9 @@ import { IListing, ListingService } from '../services/listing.service';
 })
 export class HomeComponent implements OnInit {
   listings: IListing[] = [];
-  constructor(private listingService: ListingService) {}
+  constructor(private helperService: HelperService) {}
 
   ngOnInit(): void {
-    this.listingService.getListings().subscribe((data) => {
-      this.listings = data;
-    });
-    console.log(this.listings);
+    this.helperService.listings$.subscribe((data) => (this.listings = data));
   }
 }

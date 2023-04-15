@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { HelperService } from '../services/helper.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +14,11 @@ export class HeaderComponent {
   isLoggedIn = false;
   loggedUsername = '';
 
-  constructor(protected router: Router, private auth: AuthService) {}
+  constructor(
+    protected router: Router,
+    private auth: AuthService,
+    private helperService: HelperService
+  ) {}
 
   ngOnInit() {
     this.auth.isLoggedIn$.subscribe((res) => {
@@ -52,5 +57,6 @@ export class HeaderComponent {
   searchHome(event: Event) {
     this.searchText = (<HTMLInputElement>event.target).value;
     console.log(this.searchText);
+    this.helperService.filterListings(this.searchText);
   }
 }
