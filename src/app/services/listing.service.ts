@@ -59,7 +59,7 @@ interface ILocation {
 export class ListingService {
   constructor(private http: HttpClient) {}
   getListings(): Observable<IListing[]> {
-    return this.http.get<IListing[]>('http://localhost:5500/api/properties');
+    return this.http.get<IListing[]>('https://seekers-backend.vercel.app/api/properties');
   }
 
   addListing(form: FormGroup): Observable<IListing> {
