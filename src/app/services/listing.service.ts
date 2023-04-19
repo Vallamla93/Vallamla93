@@ -87,7 +87,7 @@ export class ListingService {
       },
     };
     return this.http
-      .post<IListing>('http://localhost:5500/api/properties', data, {
+      .post<IListing>('https://seekers-backend.vercel.app/api/properties', data, {
         headers: new HttpHeaders({
           token: token,
         }),

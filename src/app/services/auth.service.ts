@@ -23,7 +23,7 @@ export class AuthService {
     this._isLoggedIn$.next(!!myToken);
   }
 
-  private loginUrl = 'http://localhost:5500/api/login';
+  private loginUrl = 'http://https://seekers-backend.vercel.app/api/login';
 
   login(email: string, password: string): Observable<IUser> {
     return this.http.post<IUser>(this.loginUrl, { email, password }).pipe(
